@@ -1,5 +1,6 @@
 // import 'package:awesome_dialog/awesome_dialog.dart';
 // import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:balaa_client_mobile/common/widget/cart_button.dart';
@@ -154,17 +155,17 @@ class _ImageFood extends StatelessWidget {
         tag: 'hero-tag-${food.id}-search',
         child: Material(
             child: Container(
-                height: context.sizeDevice.height * 0.3,
+                height: context.sizeDevice.height * 0.4,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: context.colorScheme.background,
-                    // borderRadius:
-                    //     BorderRadius.vertical(bottom: Radius.circular(22 )),
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            food.image == "" ? noImage : food.image),
-                        fit: BoxFit.cover)),
-                alignment: Alignment.topCenter)));
+                clipBehavior: Clip.hardEdge,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: food.image,
+                    placeholder: (context, url) => const LoadingScreen(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error, color: Colors.red)))));
   }
 }
 
@@ -236,10 +237,17 @@ class _Gallery extends StatelessWidget {
                       color: Colors.black12.withOpacity(0.1),
                       spreadRadius: 2.0)
                 ]),
-            child: Image.network(item,
+            child: CachedNetworkImage(
                 fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) =>
-                    loadingProgress == null ? child : const LoadingScreen())));
+                imageUrl: item,
+                placeholder: (context, url) => const LoadingScreen(),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.error, color: Colors.red))
+            // Image.network(item,
+            //     fit: BoxFit.cover,
+            //     loadingBuilder: (context, child, loadingProgress) =>
+            //         loadingProgress == null ? child : const LoadingScreen())
+            ));
   }
 
   viewImage(BuildContext context, String item) {

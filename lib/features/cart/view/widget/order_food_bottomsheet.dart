@@ -7,6 +7,7 @@ import 'package:food_repository/food_repository.dart';
 import 'package:go_router/go_router.dart';
 import 'package:balaa_client_mobile/common/dialog/app_alerts.dart';
 import 'package:balaa_client_mobile/common/widget/common_text_field.dart';
+import 'package:balaa_client_mobile/core/config/router.dart';
 import 'package:balaa_client_mobile/features/cart/cubit/cart_cubit.dart';
 import 'package:balaa_client_mobile/features/order/data/model/food_order.dart';
 import 'package:balaa_client_mobile/features/order/data/model/order_model.dart';
@@ -119,7 +120,8 @@ class _OrderFoodBottomSheetState extends State<OrderFoodBottomSheet> {
           desc: AppString.dontSelectTable,
           title: 'Thông báo!',
           textOk: AppString.ok, btnOkOnPress: () {
-        pop(context, 2);
+        pop(context, 1);
+        context.push(RouteName.tableScreen);
       });
     } else {
       if (checkExistFood(order)) {
