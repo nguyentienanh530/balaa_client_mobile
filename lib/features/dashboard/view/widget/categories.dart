@@ -51,19 +51,23 @@ class Categories extends StatelessWidget {
             children: [
               Expanded(
                   flex: 3,
-                  child: CachedNetworkImage(
-                      imageUrl: categoryModel.image,
-                      fit: BoxFit.contain,
-                      placeholder: (context, url) => const LoadingScreen(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.photo_library_outlined))),
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                    child: CachedNetworkImage(
+                        imageUrl: categoryModel.image,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const LoadingScreen(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.photo_library_outlined)),
+                  )),
               Expanded(
                   child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-                child: Text(categoryModel.name,
-                    maxLines: 1, overflow: TextOverflow.ellipsis),
-              ))
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.center,
+                      child: Text(categoryModel.name,
+                          maxLines: 1, overflow: TextOverflow.ellipsis)))
             ]));
   }
 }
